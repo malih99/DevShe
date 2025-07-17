@@ -1,6 +1,24 @@
 {
   "home": "خانه",
-  "about": "درباره من",
+  "about": "درباره",
   "projects": "پروژه‌ها",
-  "contact": "تماس"
+  "contact": "تماس",
+
+  "about_title": "درباره من",
+  "about_intro_1": "من یک توسعه‌دهنده فرانت‌اند هستم که تمرکزم بر ساخت رابط‌های کاربری مدرن و واکنش‌گرا با استفاده از React.js و Tailwind CSS است.",
+  "about_intro_2": "از کار روی پروژه‌های چالشی لذت می‌برم و همیشه مشتاق یادگیری تکنولوژی‌های جدید هستم. تجربه‌ی کار به‌صورت ریموت و حضوری را داشته‌ام.",
+  "about_intro_3": "در ابزارهای مدیریت وضعیت مانند Zustand و React Query تخصص دارم و علاقه‌مند به طراحی UI/UX تمیز با ابزارهایی مانند Figma و Shadcn هستم.",
+  "about_email": "ایمیل",
+  "about_github": "گیت‌هاب",
+  "about_location": "محل سکونت",
+  "about_location_value": "تهران، ایران",
+
+  "contact_title": "تماس با من",
+  "contact_name": "نام",
+  "contact_email": "ایمیل",
+  "contact_message": "پیام شما...",
+  "contact_submit": "ارسال پیام",
+  "contact_email_label": "ایمیل",
+  "contact_github_label": "گیت‌هاب",
+  "contact_linkedin_label": "لینکدین"
 }

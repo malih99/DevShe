@@ -16,16 +16,16 @@ export default function Header() {
     <header className="flex justify-between items-center px-6 py-4 bg-white dark:bg-gray-900 shadow-md">
       <h1 className="text-xl font-bold">DevShe</h1>
       <nav className="flex items-center gap-4">
-        <a href="#" className="hover:underline">
+        <a href="/" className="hover:underline">
           {t("home")}
         </a>
-        <a href="#" className="hover:underline">
+        <a href="/about" className="hover:underline">
           {t("about")}
         </a>
-        <a href="#" className="hover:underline">
+        <a href="/projects" className="hover:underline">
           {t("projects")}
         </a>
-        <a href="#" className="hover:underline">
+        <a href="/contact" className="hover:underline">
           {t("contact")}
         </a>
 

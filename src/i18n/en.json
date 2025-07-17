@@ -2,5 +2,23 @@
   "home": "Home",
   "about": "About",
   "projects": "Projects",
-  "contact": "Contact"
+  "contact": "Contact",
+
+  "about_title": "About Me",
+  "about_intro_1": "I’m a Frontend Developer focused on building modern and responsive interfaces using React.js and Tailwind CSS.",
+  "about_intro_2": "I enjoy working on challenging projects and I’m always eager to learn new technologies. I have experience working both remotely and on-site.",
+  "about_intro_3": "I specialize in state management tools like Zustand and React Query, and I have a passion for clean UI/UX design with tools like Figma and Shadcn.",
+  "about_email": "Email",
+  "about_github": "GitHub",
+  "about_location": "Location",
+  "about_location_value": "Tehran, Iran",
+
+  "contact_title": "Contact Me",
+  "contact_name": "Your Name",
+  "contact_email": "Your Email",
+  "contact_message": "Your message...",
+  "contact_submit": "Send Message",
+  "contact_email_label": "Email",
+  "contact_github_label": "GitHub",
+  "contact_linkedin_label": "LinkedIn"
 }

@@ -1,4 +1,3 @@
-// src/pages/Home.jsx
 import { motion } from "framer-motion";
 
 export default function Home() {
@@ -9,7 +8,6 @@ export default function Home() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
-      {/* معرفی اصلی */}
       <div className="flex flex-col lg:flex-row justify-between items-center gap-12">
         <motion.div
           className="max-w-xl space-y-6"
@@ -29,7 +27,6 @@ export default function Home() {
           </button>
         </motion.div>
 
-        {/* کارت پروژه PathPilot */}
         <motion.div
           className="bg-[#1f1d2c] p-6 rounded-2xl w-full max-w-sm shadow-lg hover:shadow-purple-700/30 transition duration-300"
           initial={{ x: 50, opacity: 0 }}
@@ -50,7 +47,6 @@ export default function Home() {
         </motion.div>
       </div>
 
-      {/* Skills + Overview */}
       <div className="grid grid-cols-1 md:grid-cols-2 mt-20 gap-8">
         <motion.div
           className="bg-[#1f1d2c] p-6 rounded-xl shadow-md"
@@ -82,7 +78,6 @@ export default function Home() {
         </motion.div>
       </div>
 
-      {/* Projects Section */}
       <div className="mt-20">
         <h3 className="text-xl font-bold mb-6">Projects / Works</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -101,7 +96,6 @@ export default function Home() {
             <p className="text-xs text-gray-400 mt-1">Restaurant UI System</p>
           </motion.div>
 
-          {/* Project Card 2 */}
           <motion.div
             className="bg-[#1f1d2c] p-6 rounded-xl flex flex-col items-center text-center shadow-md hover:shadow-blue-600/30 transition duration-300 cursor-pointer"
             whileHover={{ scale: 1.03 }}
