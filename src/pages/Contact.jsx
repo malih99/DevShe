@@ -7,7 +7,7 @@ export default function Contact() {
 
   return (
     <motion.div
-      className={`w-full min-h-screen px-8 py-12 flex flex-col justify-center bg-gradient-to-br from-[#0c0f18] via-[#1a1232] to-[#241032] text-white ${
+      className={`w-full h-screen px-8 py-12 flex flex-col justify-center bg-gradient-to-br from-[#0c0f18] via-[#1a1232] to-[#241032] text-white ${
         isFa ? "text-right" : "text-left"
       }`}
       dir={isFa ? "rtl" : "ltr"}
@@ -20,32 +20,34 @@ export default function Contact() {
         {isFa ? "تماس با من" : "Contact Me"}
       </h1>
 
-      <form
-        onSubmit={(e) => e.preventDefault()}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full"
-      >
-        <input
-          type="text"
-          placeholder={isFa ? "نام" : "Your Name"}
-          className="bg-[#1f1d2c] text-white p-3 rounded-lg placeholder-gray-400 focus:outline-none"
-        />
-        <input
-          type="email"
-          placeholder={isFa ? "ایمیل" : "Your Email"}
-          className="bg-[#1f1d2c] text-white p-3 rounded-lg placeholder-gray-400 focus:outline-none"
-        />
-        <textarea
-          placeholder={isFa ? "پیام شما..." : "Your message..."}
-          className="bg-[#1f1d2c] text-white p-3 rounded-lg placeholder-gray-400 focus:outline-none md:col-span-2"
-          rows={5}
-        ></textarea>
-        <button
-          type="submit"
-          className="bg-blue-600 hover:bg-blue-700 transition py-3 px-6 rounded-xl font-medium md:col-span-2"
+      <div className="w-full">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full"
         >
-          {isFa ? "ارسال پیام" : "Send Message"}
-        </button>
-      </form>
+          <input
+            type="text"
+            placeholder={isFa ? "نام" : "Your Name"}
+            className="bg-[#1f1d2c] text-white p-3 rounded-lg placeholder-gray-400 focus:outline-none"
+          />
+          <input
+            type="email"
+            placeholder={isFa ? "ایمیل" : "Your Email"}
+            className="bg-[#1f1d2c] text-white p-3 rounded-lg placeholder-gray-400 focus:outline-none"
+          />
+          <textarea
+            placeholder={isFa ? "پیام شما..." : "Your message..."}
+            className="bg-[#1f1d2c] text-white p-3 rounded-lg placeholder-gray-400 focus:outline-none md:col-span-2"
+            rows={5}
+          ></textarea>
+          <button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 transition py-3 px-6 rounded-xl font-medium md:col-span-2"
+          >
+            {isFa ? "ارسال پیام" : "Send Message"}
+          </button>
+        </form>
+      </div>
 
       <div className="mt-12 space-y-4 text-sm text-gray-400">
         <p>

@@ -10,7 +10,7 @@ export default function Projects() {
 
   return (
     <motion.div
-      className={`w-full min-h-screen px-8 py-12 flex flex-col justify-center bg-gradient-to-br from-[#0c0f18] via-[#1a1232] to-[#241032] text-white ${
+      className={`w-full h-screen px-8 py-12 flex flex-col justify-center bg-gradient-to-br from-[#0c0f18] via-[#1a1232] to-[#241032] text-white ${
         isFa ? "text-right" : "text-left"
       }`}
       dir={isFa ? "rtl" : "ltr"}
