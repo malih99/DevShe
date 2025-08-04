@@ -58,7 +58,7 @@ export default function Home() {
           <h3 className="text-lg font-semibold text-gray-200 mb-2">
             In Progress
           </h3>
-          <div className="text-4xl font-bold text-white">PathPilot 56%</div>
+          <div className="text-xl font-bold text-white">PathPilot 56%</div>
           <div className="w-full h-2 mt-4 bg-gray-700 rounded-full">
             <div className="h-full w-[56%] bg-blue-500 rounded-full" />
           </div>
