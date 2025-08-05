@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function Home() {
@@ -22,9 +23,12 @@ export default function Home() {
             I focus on creating solutions that enhance and simplify the user
             experience.
           </p>
-          <button className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl font-medium shadow-lg hover:scale-105 transition duration-300">
+          <Link
+            to="/resume"
+            className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl font-medium shadow-lg hover:scale-105 transition duration-300"
+          >
             Resume
-          </button>
+          </Link>
         </motion.div>
 
         <motion.div
@@ -49,18 +53,36 @@ export default function Home() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 mt-20 gap-8">
         <motion.div
-          className="bg-[#1f1d2c] p-6 rounded-xl shadow-md"
+          className="bg-[#1f1d2c] p-6 rounded-xl flex items-center gap-6 shadow-md"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h3 className="text-lg font-semibold text-gray-200 mb-2">
-            In Progress
-          </h3>
-          <div className="text-xl font-bold text-white">PathPilot 56%</div>
-          <div className="w-full h-2 mt-4 bg-gray-700 rounded-full">
-            <div className="h-full w-[56%] bg-blue-500 rounded-full" />
+          {/* Progress Circle */}
+          <div className="relative w-20 h-20">
+            <div
+              className="absolute inset-0 rounded-full"
+              style={{
+                background: `conic-gradient(#3b82f6 ${
+                  56 * 3.6
+                }deg, #374151 0deg)`,
+              }}
+            ></div>
+            <div className="absolute inset-2 rounded-full bg-[#1f1d2c] flex items-center justify-center">
+              <span className="text-white font-bold text-sm">56%</span>
+            </div>
+          </div>
+
+          {/* Info */}
+          <div className="space-y-1">
+            <div className="text-sm text-gray-400 font-medium">
+              Currently Building
+            </div>
+            <div className="text-xl font-bold text-white">PathPilot</div>
+            <div className="text-xs text-gray-400">
+              Path Management System — React + Supabase
+            </div>
           </div>
         </motion.div>
 
