@@ -1,25 +1,27 @@
 import { create } from "zustand";
 
-const getInitialTheme = () => {
-  if (typeof window !== "undefined") {
-    const stored = localStorage.getItem("theme");
-    if (stored === "dark") {
-      document.documentElement.classList.add("dark");
-    }
-    return stored || "light";
-  }
-  return "light";
-};
+function getInitialTheme() {
+  if (typeof window === "undefined") return "light";
+  const stored = localStorage.getItem("theme");
+  if (stored) return stored;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
 
-const useThemeStore = create((set) => ({
+export const useThemeStore = create((set, get) => ({
   theme: getInitialTheme(),
-  toggleTheme: () =>
-    set((state) => {
-      const newTheme = state.theme === "light" ? "dark" : "light";
-      localStorage.setItem("theme", newTheme);
-      document.documentElement.classList.toggle("dark", newTheme === "dark");
-      return { theme: newTheme };
-    }),
+  setTheme: (newTheme) => {
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+    set({ theme: newTheme });
+  },
+  toggleTheme: () => {
+    const next = get().theme === "light" ? "dark" : "light";
+    localStorage.setItem("theme", next);
+    document.documentElement.classList.toggle("dark", next === "dark");
+    set({ theme: next });
+  },
 }));
 
 export default useThemeStore;

@@ -1,138 +1,191 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
+import Hero from "../components/Hero";
+import TechPills from "../components/TechPills";
+import CardTeaser from "../components/CardTeaser";
+
 export default function Home() {
   return (
-    <motion.div
-      className="min-h-screen px-8 py-12 bg-gradient-to-br from-[#0c0f18] via-[#1a1232] to-[#241032] text-white"
+    <motion.main
+      className="min-h-screen px-6 md:px-10 py-10 bg-gradient-to-br from-[#0c0f18] via-[#1a1232] to-[#241032] text-white"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 0.6 }}
     >
-      <div className="flex flex-col lg:flex-row justify-between items-center gap-12">
-        <motion.div
-          className="max-w-xl space-y-6"
-          initial={{ x: -50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h1 className="text-5xl font-bold leading-tight">
-            I’m Frontend Developer
-          </h1>
-          <p className="text-lg text-gray-300">
-            I focus on creating solutions that enhance and simplify the user
-            experience.
-          </p>
-          <Link
-            to="/resume"
-            className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl font-medium shadow-lg hover:scale-105 transition duration-300"
-          >
-            Resume
-          </Link>
-        </motion.div>
+      <Hero
+        title="Frontend Developer — React Focused"
+        subtitle="I craft responsive, data-heavy UIs with clean architecture and smooth interactions."
+        cta={{ href: "/resume", label: "Resume" }}
+        secondaryCta={{ href: "/projects", label: "Projects" }}
+        // avatar را اگر تصویر داری فعال کن:
+        // avatar="/assets/dashboard-hero.png"
+      />
 
-        <motion.div
-          className="bg-[#1f1d2c] p-6 rounded-2xl w-full max-w-sm shadow-lg hover:shadow-purple-700/30 transition duration-300"
-          initial={{ x: 50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-        >
-          <h2 className="text-xl font-bold mb-2">PathPilot</h2>
-          <p className="text-sm text-gray-400">
-            Path Management System Development
-          </p>
-          <div className="mt-4">
-            <img
-              src="/assets/pathpilot-icon.svg"
-              alt="PathPilot"
-              className="w-24 h-24 mx-auto"
-            />
-          </div>
-        </motion.div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 mt-20 gap-8">
-        <motion.div
-          className="bg-[#1f1d2c] p-6 rounded-xl flex items-center gap-6 shadow-md"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          {/* Progress Circle */}
-          <div className="relative w-20 h-20">
-            <div
-              className="absolute inset-0 rounded-full"
-              style={{
-                background: `conic-gradient(#3b82f6 ${
-                  56 * 3.6
-                }deg, #374151 0deg)`,
-              }}
-            ></div>
-            <div className="absolute inset-2 rounded-full bg-[#1f1d2c] flex items-center justify-center">
-              <span className="text-white font-bold text-sm">56%</span>
-            </div>
-          </div>
-
-          {/* Info */}
-          <div className="space-y-1">
-            <div className="text-sm text-gray-400 font-medium">
-              Currently Building
-            </div>
-            <div className="text-xl font-bold text-white">PathPilot</div>
-            <div className="text-xs text-gray-400">
-              Path Management System — React + Supabase
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="text-gray-400 text-sm"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          I am developing PathPilot. This Path Management System is a personal
-          application that I am working on. It incorporates a blend of React and
-          Supabase for advanced backend capabilities to drive its path
-          management functionalities.
-        </motion.div>
-      </div>
-
-      <div className="mt-20">
-        <h3 className="text-xl font-bold mb-6">Projects / Works</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Project Card 1 */}
+      <TechPills
+        items={[
+          "React",
+          "TailwindCSS",
+          "Zustand",
+          "React Query",
+          "MUI",
+          "TanStack Table",
+          "Recharts",
+          "Framer Motion",
+          "Vite",
+          "i18next",
+        ]}
+      />
+      {/* Featured Work: DevDash (جای PathPilot) */}
+      <section className="mt-14">
+        <div className="flex flex-col lg:flex-row justify-between items-stretch gap-12">
+          {/* توضیح/CTA */}
           <motion.div
-            className="bg-[#1f1d2c] p-6 rounded-xl flex flex-col items-center text-center shadow-md hover:shadow-blue-600/30 transition duration-300 cursor-pointer"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
+            className="max-w-xl space-y-5"
+            initial={{ x: -40, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
           >
-            <img
-              src="/assets/menu-icon.svg"
-              className="w-16 mb-4"
-              alt="Digital Menu"
-            />
-            <h4 className="text-lg font-semibold">Digital Menu</h4>
-            <p className="text-xs text-gray-400 mt-1">Restaurant UI System</p>
+            <h2 className="text-3xl md:text-4xl font-bold leading-tight">
+              DevDash — Admin Panel & Dashboard
+            </h2>
+            <p className="text-base text-gray-300 leading-relaxed">
+              A modular admin dashboard built with React and Tailwind. State is
+              managed via Zustand & React Query; data grids with TanStack Table;
+              charts with Recharts; UI components with MUI; animations powered
+              by Framer Motion.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              {[
+                "React",
+                "Tailwind",
+                "Zustand",
+                "React Query",
+                "MUI",
+                "TanStack Table",
+                "Recharts",
+                "Framer Motion",
+              ].map((tag) => (
+                <span
+                  key={tag}
+                  className="bg-white/10 border border-white/10 px-2 py-1 rounded-full"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <div className="pt-2">
+              <Link
+                to="/projects"
+                className="inline-block px-5 py-2 bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl font-medium shadow-lg hover:scale-105 transition duration-300"
+              >
+                See Projects
+              </Link>
+            </div>
           </motion.div>
 
+          {/* کارت فیچر با Progress ساده */}
           <motion.div
-            className="bg-[#1f1d2c] p-6 rounded-xl flex flex-col items-center text-center shadow-md hover:shadow-blue-600/30 transition duration-300 cursor-pointer"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
+            className="bg-[#1f1d2c] p-6 rounded-2xl w-full max-w-sm shadow-lg hover:shadow-purple-700/30 transition duration-300"
+            initial={{ x: 40, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <img
-              src="/assets/pathpilot-icon.svg"
-              className="w-16 mb-4"
-              alt="PathPilot"
-            />
-            <h4 className="text-lg font-semibold">PathPilot</h4>
-            <p className="text-xs text-gray-400 mt-1">Path Management System</p>
+            <h3 className="text-xl font-bold mb-1">DevDash</h3>
+            <p className="text-sm text-gray-400">
+              Admin Panel & Dashboard Components
+            </p>
+
+            <div className="mt-5 flex items-center gap-5">
+              {/* Progress Ring */}
+              <div className="relative w-20 h-20 shrink-0">
+                <div
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background: `conic-gradient(#60a5fa ${
+                      72 * 3.6
+                    }deg, #374151 0deg)`,
+                  }}
+                />
+                <div className="absolute inset-2 rounded-full bg-[#1f1d2c] grid place-items-center">
+                  <span className="text-white font-bold text-sm">72%</span>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <div className="text-sm text-gray-400 font-medium">
+                  Currently Building
+                </div>
+                <div className="text-lg font-semibold text-white">DevDash</div>
+                <div className="text-xs text-gray-400">
+                  React · Zustand · React Query · MUI · TanStack · Recharts
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 border-t border-white/10 pt-4 text-xs text-gray-400">
+              Modular tables, filters, charts & layout primitives for real-world
+              dashboards.
+            </div>
           </motion.div>
         </div>
-      </div>
-    </motion.div>
+      </section>
+
+      {/* Intro/Context متن کوتاه درباره‌ی DevDash */}
+      <motion.p
+        className="mt-10 text-gray-300 text-sm leading-relaxed max-w-3xl"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        I’ve built data-heavy UIs in real projects (admin panels and digital
+        restaurant UI). DevDash packages those patterns—robust tables, filters,
+        and charts—into reusable pieces. It reflects my day-to-day stack and the
+        way I structure production UIs.
+      </motion.p>
+
+      {/* Projects / Works teaser */}
+      <section className="mt-16">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-xl font-bold">Projects / Works</h3>
+          <Link
+            to="/projects"
+            className="text-sm text-blue-300 hover:underline"
+          >
+            View all →
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <CardTeaser
+            to="/projects/rah-restaurant-menu"
+            img="/assets/menu-icon.svg"
+            title="Digital Menu"
+            subtitle="Restaurant UI System"
+            badges={["HTML", "CSS", "JavaScript", "Responsive"]}
+          />
+          <CardTeaser
+            to="/projects/devdash"
+            img="/assets/dashboard.svg"
+            title="DevDash"
+            subtitle="Admin Panel & Dashboard"
+            badges={[
+              "React",
+              "Tailwind",
+              "Zustand",
+              "React Query",
+              "MUI",
+              "TanStack",
+              "Recharts",
+            ]}
+          />
+        </div>
+      </section>
+    </motion.main>
   );
 }

@@ -1,11 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Primary SEO -->
+    <title>DevShe — Malihe Asadi | Frontend Developer</title>
+    <meta
+      name="description"
+      content="پرتفولیوی ملیحه اسدی — توسعه‌دهنده فرانت‌اند با تمرکز بر React، Tailwind، Zustand و React Query. نمونه‌کارها، رزومه و راه‌های تماس."
+    />
+    <meta
+      name="keywords"
+      content="Frontend, React, Tailwind, Zustand, React Query, Portfolio"
+    />
+    <meta name="author" content="Malihe Asadi" />
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- Theme color (light/dark) -->
+    <meta
+      name="theme-color"
+      content="#ffffff"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#0c0f18"
+      media="(prefers-color-scheme: dark)"
+    />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="DevShe — Frontend Developer" />
+    <meta
+      property="og:description"
+      content="نمونه‌کارها، رزومه و اطلاعات تماس ملیحه اسدی — Frontend Developer."
+    />
+    <meta property="og:url" content="https://your-domain.com" />
+    <meta property="og:image" content="/assets/og-cover.jpg" />
+    <meta property="og:locale" content="fa_IR" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DevShe — Frontend Developer" />
+    <meta
+      name="twitter:description"
+      content="نمونه‌کارها، رزومه و اطلاعات تماس ملیحه اسدی — Frontend Developer."
+    />
+    <meta name="twitter:image" content="/assets/og-cover.jpg" />
+
+    <!-- Icons -->
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DevShe</title>
+    <link rel="apple-touch-icon" href="/assets/icon-192.png" sizes="192x192" />
+    <link rel="icon" href="/assets/icon-512.png" sizes="512x512" />
+
+    <!-- (اختیاری) PWA Manifest -->
+    <!-- <link rel="manifest" href="/manifest.webmanifest" /> -->
+
+    <!-- Set theme before React mounts (prevents flash) -->
+    <script>
+      (() => {
+        try {
+          const stored = localStorage.getItem("theme");
+          const systemPrefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)"
+          ).matches;
+          const theme = stored || (systemPrefersDark ? "dark" : "light");
+          if (theme === "dark") document.documentElement.classList.add("dark");
+        } catch {}
+      })();
+    </script>
   </head>
+
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>

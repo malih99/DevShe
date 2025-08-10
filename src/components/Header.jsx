@@ -1,10 +1,9 @@
+// src/components/Header.jsx
 import { useTranslation } from "react-i18next";
-import useThemeStore from "../store/themeStore";
-import { Moon, Sun } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
   const { t, i18n } = useTranslation();
-  const { theme, toggleTheme } = useThemeStore();
 
   const switchLang = () => {
     const newLang = i18n.language === "en" ? "fa" : "en";
@@ -13,26 +12,43 @@ export default function Header() {
   };
 
   return (
-    <header className="flex justify-between items-center px-6 py-4 bg-white dark:bg-gray-900 shadow-md">
-      <h1 className="text-xl font-bold">DevShe</h1>
+    <header className="flex justify-between items-center px-6 py-4 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-black/[0.06] dark:border-white/10">
+      <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+        DevShe
+      </h1>
+
       <nav className="flex items-center gap-4">
-        <a href="/" className="hover:underline">
+        <a
+          href="/"
+          className="hover:underline text-gray-700 dark:text-gray-200"
+        >
           {t("home")}
         </a>
-        <a href="/about" className="hover:underline">
+        <a
+          href="/about"
+          className="hover:underline text-gray-700 dark:text-gray-200"
+        >
           {t("about")}
         </a>
-        <a href="/projects" className="hover:underline">
+        <a
+          href="/projects"
+          className="hover:underline text-gray-700 dark:text-gray-200"
+        >
           {t("projects")}
         </a>
-        <a href="/contact" className="hover:underline">
+        <a
+          href="/contact"
+          className="hover:underline text-gray-700 dark:text-gray-200"
+        >
           {t("contact")}
         </a>
 
-        <button onClick={toggleTheme} className="ml-4">
-          {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
-        </button>
-        <button onClick={switchLang} className="ml-2 text-sm">
+        <ThemeToggle className="ml-2" />
+
+        <button
+          onClick={switchLang}
+          className="ml-2 text-xs px-2.5 py-1 rounded-md border border-white/10 bg-white/5 hover:bg-white/10 text-gray-800 dark:text-gray-200"
+        >
           {i18n.language === "en" ? "FA" : "EN"}
         </button>
       </nav>

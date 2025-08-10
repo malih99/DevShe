@@ -1,43 +1,57 @@
 // src/data/projectsData.js
 const projects = [
   {
-    id: 1,
-    title: {
-      en: "Sepehr Academy",
-      fa: "آکادمی سپهر",
+    id: "sepehr-academy",
+    slug: "sepehr-academy",
+    title: { fa: "آکادمی سپهر", en: "Sepehr Academy" },
+    summary: {
+      fa: "لندینگ حرفه‌ای با فرم و اسلایدر و ولیدیشن.",
+      en: "Landing page with forms, slider, and validations.",
     },
-    description: {
-      en: "Landing page with React, Tailwind, Formik, Swiper, MUI",
-      fa: "صفحه لندینگ با React، Tailwind، Formik، Swiper و MUI",
-    },
+    stack: ["React", "Tailwind", "Formik", "Yup", "Swiper", "MUI", "Axios"],
+    period: "1403",
+    repo: "https://github.com/malih99",
+    demo: "",
     image: "/assets/sepehr.svg",
-    link: "https://github.com/malih99/sepehr-academy",
   },
   {
-    id: 2,
+    id: "devdash",
+    slug: "devdash",
+    title: { fa: "DevDash", en: "DevDash" },
+    summary: {
+      fa: "داشبورد ماژولار با جدول‌ها، فیلترها و چارت‌ها.",
+      en: "Modular dashboard with tables, filters and charts.",
+    },
+    stack: [
+      "React",
+      "Tailwind",
+      "Zustand",
+      "React Query",
+      "MUI",
+      "TanStack Table",
+      "Recharts",
+    ],
+    period: "در حال توسعه",
+    repo: "https://github.com/malih99",
+    demo: "",
+    image: "/assets/dashboard.svg", // اگر نداری از placeholder استفاده کن
+  },
+  {
+    id: "rah-restaurant-menu",
+    slug: "rah-restaurant-menu",
     title: {
-      en: "Digital Menu",
-      fa: "منوی دیجیتال",
+      fa: "منوی دیجیتال رستوران (رهاسا)",
+      en: "Digital Restaurant Menu",
     },
-    description: {
-      en: "Restaurant UI system with HTML, CSS, JavaScript",
-      fa: "سیستم منوی رستوران با HTML، CSS و JavaScript",
+    summary: {
+      fa: "رابط کاربری رستوران و منوی دیجیتال واکنش‌گرا.",
+      en: "Responsive restaurant UI & digital menu.",
     },
+    stack: ["HTML", "CSS", "JavaScript", "Responsive"],
+    period: "1402-1404",
+    repo: "https://github.com/malih99",
+    demo: "http://menu.hesabesh.com/iq/",
     image: "/assets/menu-icon.svg",
-    link: "https://github.com/malih99/digital-menu",
-  },
-  {
-    id: 3,
-    title: {
-      en: "PathPilot",
-      fa: "PathPilot",
-    },
-    description: {
-      en: "Path Management System built with React and Supabase",
-      fa: "سیستم مدیریت مسیر با React و Supabase",
-    },
-    image: "/assets/pathpilot-icon.svg",
-    link: "https://github.com/malih99/pathpilot",
   },
 ];
 
