@@ -6,6 +6,8 @@ body {
   overflow-x: hidden;
   box-sizing: border-box;
 }
+/* دارک‌مودِ کلاس‌محور در v4 */
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

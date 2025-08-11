@@ -14,7 +14,7 @@ export default function About() {
 
   return (
     <motion.section
-      className={`w-full min-h-screen px-6 md:px-10 py-12 bg-gradient-to-br from-[#0c0f18] via-[#1a1232] to-[#241032] text-white ${
+      className={`w-screen min-h-screen px-6 md:px-10 py-12 bg-gradient-to-br from-[#0c0f18] via-[#1a1232] to-[#241032] text-white ${
         isFa ? "text-right" : "text-left"
       }`}
       dir={isFa ? "rtl" : "ltr"}

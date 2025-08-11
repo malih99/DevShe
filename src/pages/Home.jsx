@@ -8,7 +8,7 @@ import CardTeaser from "../components/CardTeaser";
 export default function Home() {
   return (
     <motion.main
-      className="min-h-screen px-6 md:px-10 py-10 bg-gradient-to-br from-[#0c0f18] via-[#1a1232] to-[#241032] text-white"
+      className="min-h-screen w-screen px-6 md:px-10 py-10 bg-gradient-to-br from-[#0c0f18] via-[#1a1232] to-[#241032] text-white"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
