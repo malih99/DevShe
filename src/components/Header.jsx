@@ -1,4 +1,3 @@
-// src/components/Header.jsx
 import { useTranslation } from "react-i18next";
 import ThemeToggle from "./ThemeToggle";
 
@@ -12,7 +11,12 @@ export default function Header() {
   };
 
   return (
-    <header className="flex justify-between items-center px-6 py-4 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-black/[0.06] dark:border-white/10">
+    <header
+      className="flex justify-between items-center px-6 py-4
+  bg-white/80 dark:bg-gray-900/80 backdrop-blur
+  border-b border-black/10 dark:border-white/10
+  text-gray-900 dark:text-white"
+    >
       <h1 className="text-xl font-bold text-gray-900 dark:text-white">
         DevShe
       </h1>
