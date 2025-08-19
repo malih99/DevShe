@@ -12,9 +12,9 @@ export default function Contact() {
       exit={{ opacity: 0, y: 40 }}
       transition={{ duration: 0.8 }}
     >
-      <h2 className="text-4xl font-extrabold mb-10 tracking-tight">
+      <h3 className="text-2xl font-extrabold mb-5 tracking-tight">
         تماس با من
-      </h2>
+      </h3>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Info card */}
