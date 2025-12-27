@@ -52,5 +52,28 @@
   "projects_title": "پروژه‌ها",
   "projects_search_placeholder": "جستجو...",
   "projects_filter_all": "همه تکنولوژی‌ها",
-  "projects_empty": "هیچ پروژه‌ای مطابق فیلتر/جستجو یافت نشد."
+  "projects_empty": "هیچ پروژه‌ای مطابق فیلتر/جستجو یافت نشد.",
+
+  "skills_tools_title": "مهارت‌ها و ابزارها",
+  "common_show_more": "بیشتر",
+  "common_show_less": "کمتر",
+
+  "about_key_skills": "مهارت‌های کلیدی",
+  "about_cta_download": "دانلود رزومه",
+  "about_cta_contact": "ارتباط",
+
+  "home_featured_title": "DevShe — پنل ادمین و داشبورد",
+  "home_featured_desc": "یک داشبورد ماژولار با React و Tailwind. مدیریت state با Zustand و React Query؛ جدول‌ها با TanStack Table؛ چارت‌ها با Recharts؛ کامپوننت‌های UI با MUI؛ انیمیشن‌ها با Framer Motion.",
+  "home_featured_cta": "مشاهده پروژه‌ها",
+  "home_featured_card_brand": "DevShe",
+  "home_featured_card_caption": "کامپوننت‌های پنل ادمین و داشبورد",
+  "home_featured_building": "در حال توسعه",
+  "home_featured_footer": "الگوهای آماده برای جدول، فیلتر، چارت و چیدمان‌های داشبوردهای واقعی.",
+  "home_intro": "در پروژه‌های واقعی روی UIهای دیتاهِوی (پنل ادمین و منوی دیجیتال) کار کرده‌ام. DevDash نتیجه‌ی جمع‌بندی همان الگوهاست—جدول‌ها، فیلترها و چارت‌های قابل‌اعتماد—در قالب قطعات قابل‌استفاده مجدد.",
+  "home_projects_title": "پروژه‌ها / نمونه‌کارها",
+  "home_projects_view_all": "مشاهده همه →",
+  "home_teaser_menu_title": "منوی دیجیتال",
+  "home_teaser_menu_subtitle": "سیستم UI رستوران",
+  "home_teaser_devdash_title": "DevDash",
+  "home_teaser_devdash_subtitle": "پنل ادمین و داشبورد"
 }

@@ -52,5 +52,28 @@
   "projects_title": "Projects",
   "projects_search_placeholder": "Search projects…",
   "projects_filter_all": "All tech",
-  "projects_empty": "No projects match your filters."
+  "projects_empty": "No projects match your filters.",
+
+  "skills_tools_title": "Skills & Tools",
+  "common_show_more": "Show more",
+  "common_show_less": "Show less",
+
+  "about_key_skills": "Key Skills",
+  "about_cta_download": "Download Resume",
+  "about_cta_contact": "Contact",
+
+  "home_featured_title": "DevShe — Admin Panel & Dashboard",
+  "home_featured_desc": "A modular admin dashboard built with React and Tailwind. State is managed via Zustand & React Query; data grids with TanStack Table; charts with Recharts; UI components with MUI; animations powered by Framer Motion.",
+  "home_featured_cta": "See Projects",
+  "home_featured_card_brand": "DevShe",
+  "home_featured_card_caption": "Admin Panel & Dashboard Components",
+  "home_featured_building": "Currently Building",
+  "home_featured_footer": "Modular tables, filters, charts & layout primitives for real-world dashboards.",
+  "home_intro": "I’ve built data-heavy UIs in real projects (admin panels and digital restaurant UI). DevDash packages those patterns—robust tables, filters, and charts—into reusable pieces. It reflects my day-to-day stack and the way I structure production UIs.",
+  "home_projects_title": "Projects / Works",
+  "home_projects_view_all": "View all →",
+  "home_teaser_menu_title": "Digital Menu",
+  "home_teaser_menu_subtitle": "Restaurant UI System",
+  "home_teaser_devdash_title": "DevDash",
+  "home_teaser_devdash_subtitle": "Admin Panel & Dashboard"
 }
