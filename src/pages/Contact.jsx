@@ -32,8 +32,8 @@ export default function Contact() {
             <ContactInfo
               icon={<Mail size={18} />}
               title={t("contact_email_label")}
-              value="malih.asadi99@gmail.com"
-              link="mailto:malih.asadi99@gmail.com"
+              value="maliheasadi99@gmail.com"
+              link="mailto:maliheasadi99@gmail.com"
             />
             <ContactInfo
               icon={<Github size={18} />}
