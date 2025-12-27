@@ -1,185 +1,266 @@
+import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
-import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { ExternalLink, Github, ArrowLeft, ArrowRight } from "lucide-react";
 import projects from "../data/projectsData";
 
-function pickLang(obj, lang) {
+function pick(obj, lang) {
   if (!obj) return "";
   if (typeof obj === "string") return obj;
-  return obj[lang] || obj.fa || obj.en || "";
+  return obj?.[lang] || obj?.en || obj?.fa || "";
+}
+
+function pickArr(obj, lang) {
+  const v = pick(obj, lang);
+  if (Array.isArray(v)) return v;
+  return v ? [v] : [];
 }
 
 export default function ProjectDetails() {
   const { slug } = useParams();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const lang = i18n.language || "en";
   const isFa = lang === "fa";
 
-  const project = projects.find((p) => (p.slug || p.id) === slug);
+  const project = useMemo(
+    () => projects.find((x) => (x.slug || x.id) === slug),
+    [slug]
+  );
 
   if (!project) {
     return (
-      <motion.section
-        className={`w-full min-h-screen px-6 md:px-10 py-12 bg-gradient-to-br from-[#0c0f18] via-[#1a1232] to-[#241032] text-white ${
-          isFa ? "text-right" : "text-left"
-        }`}
+      <section
+        className="min-h-screen px-6 md:px-10 py-14 bg-gradient-to-br from-[#0c0f18] via-[#1a1232] to-[#241032] text-white"
         dir={isFa ? "rtl" : "ltr"}
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
       >
         <div className="max-w-4xl mx-auto">
-          <p className="text-lg font-semibold">
-            {isFa ? "پروژه پیدا نشد." : "Project not found."}
-          </p>
-          <p className="mt-2 text-sm text-white/70">
-            {isFa
-              ? "ممکن است لینک اشتباه باشد یا این پروژه از لیست حذف شده باشد."
-              : "The link may be wrong, or the project was removed."}
-          </p>
-
-          <div className="mt-6">
-            <Link
-              to="/projects"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm hover:bg-white/15 transition"
-            >
-              ← {isFa ? "بازگشت به پروژه‌ها" : "Back to projects"}
-            </Link>
-          </div>
+          <h1 className="text-2xl font-extrabold">
+            {t("project_not_found_title")}
+          </h1>
+          <p className="mt-2 text-white/70">{t("project_not_found_desc")}</p>
+          <Link
+            to="/projects"
+            className="inline-flex mt-6 items-center gap-2 px-4 py-2 rounded-2xl bg-white/10 border border-white/10 hover:bg-white/15 transition"
+          >
+            {isFa ? <ArrowRight size={16} /> : <ArrowLeft size={16} />}
+            {t("project_back")}
+          </Link>
         </div>
-      </motion.section>
+      </section>
     );
   }
 
-  const title = pickLang(project.title, lang) || "Untitled";
-  const summary = pickLang(project.summary, lang);
+  const title = pick(project.title, lang);
+  const summary = pick(project.summary, lang);
+  const period = pick(project.period, lang);
   const image = project.image || "/assets/placeholder.svg";
 
+  const cs = project.caseStudy || {};
+  const problem = pick(cs.problem, lang);
+  const solution = pick(cs.solution, lang);
+  const role = pick(cs.role, lang);
+  const features = pickArr(cs.features, lang);
+  const results = pickArr(cs.results, lang);
+  const screenshots = Array.isArray(cs.screenshots) ? cs.screenshots : [];
+
   return (
-    <motion.section
-      className={`w-full min-h-screen px-6 md:px-10 py-12 bg-gradient-to-br from-[#0c0f18] via-[#1a1232] to-[#241032] text-white ${
-        isFa ? "text-right" : "text-left"
-      }`}
+    <section
+      className="min-h-screen px-6 md:px-10 py-12 bg-gradient-to-br from-[#0c0f18] via-[#1a1232] to-[#241032] text-white"
       dir={isFa ? "rtl" : "ltr"}
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 24 }}
-      transition={{ duration: 0.5 }}
     >
-      <div className="max-w-5xl mx-auto">
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
+      <div className="max-w-6xl mx-auto">
+        {/* Top bar */}
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <Link
             to="/projects"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm hover:bg-white/15 transition"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/10 border border-white/10 hover:bg-white/15 transition"
           >
-            ← {isFa ? "بازگشت" : "Back"}
+            {isFa ? <ArrowRight size={16} /> : <ArrowLeft size={16} />}
+            {t("project_back")}
           </Link>
 
           <div className="flex items-center gap-2">
-            {project.repo && (
-              <a
-                href={project.repo}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm hover:bg-white/15 transition"
-              >
-                {isFa ? "ریپو (GitHub) ↗" : "Repo (GitHub) ↗"}
-              </a>
-            )}
             {project.demo && (
               <a
                 href={project.demo}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm hover:bg-white/15 transition"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/10 border border-white/10 hover:bg-white/15 transition"
               >
-                {isFa ? "دمو ↗" : "Live demo ↗"}
+                <ExternalLink size={16} className="opacity-80" />
+                {t("project_live_demo")}
+              </a>
+            )}
+            {project.repo && (
+              <a
+                href={project.repo}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/10 border border-white/10 hover:bg-white/15 transition"
+              >
+                <Github size={16} className="opacity-80" />
+                {t("project_source_code")}
               </a>
             )}
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-          <div className="lg:col-span-3">
-            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-              {title}
-            </h1>
+        {/* Hero */}
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-[1.4fr_0.6fr] gap-6">
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_-40px_rgba(0,0,0,0.85)]">
+            <div className="flex items-start gap-4">
+              <img
+                src={image}
+                alt={title}
+                className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 p-2"
+                loading="lazy"
+              />
+              <div className="min-w-0">
+                <h1 className="text-2xl md:text-3xl font-extrabold leading-tight">
+                  {title}
+                </h1>
+                {period && (
+                  <p className="mt-1 text-sm text-white/60">{period}</p>
+                )}
+                {summary && (
+                  <p className="mt-4 text-white/75 leading-7">{summary}</p>
+                )}
+              </div>
+            </div>
 
-            {summary && (
-              <p className="mt-3 text-base md:text-lg text-white/80 leading-relaxed">
-                {summary}
-              </p>
-            )}
-
+            {/* Stack chips */}
             <div className="mt-6 flex flex-wrap gap-2">
-              {project.period && (
-                <span className="text-xs rounded-full border border-white/15 bg-white/10 px-3 py-1">
-                  {isFa ? "بازه: " : "Period: "}
-                  {project.period}
-                </span>
-              )}
-              {(project.stack || []).map((s) => (
+              {(project.stack || []).map((tech) => (
                 <span
-                  key={s}
-                  className="text-xs rounded-full border border-white/15 bg-white/10 px-3 py-1"
+                  key={tech}
+                  className="text-xs bg-white/5 border border-white/10 px-2.5 py-1.5 rounded-2xl text-white/80"
                 >
-                  {s}
+                  {tech}
                 </span>
               ))}
             </div>
           </div>
 
-          <div className="lg:col-span-2">
-            <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-              <img
-                src={image}
-                alt={title}
-                className="w-full h-56 object-cover"
-                loading="lazy"
-              />
+          {/* Sticky side summary */}
+          <aside className="lg:sticky lg:top-24 h-fit rounded-3xl border border-white/10 bg-white/5 p-6">
+            <h3 className="text-sm font-semibold text-white/90">
+              {t("project_links")}
+            </h3>
+
+            <div className="mt-3 space-y-2">
+              {project.demo ? (
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full inline-flex items-center justify-between px-4 py-3 rounded-2xl bg-white/10 border border-white/10 hover:bg-white/15 transition"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <ExternalLink size={16} className="opacity-80" />
+                    {t("project_live_demo")}
+                  </span>
+                  <span className="text-white/60">↗</span>
+                </a>
+              ) : (
+                <div className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white/50 text-sm">
+                  {t("project_no_demo")}
+                </div>
+              )}
+
+              {project.repo ? (
+                <a
+                  href={project.repo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full inline-flex items-center justify-between px-4 py-3 rounded-2xl bg-white/10 border border-white/10 hover:bg-white/15 transition"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <Github size={16} className="opacity-80" />
+                    {t("project_source_code")}
+                  </span>
+                  <span className="text-white/60">↗</span>
+                </a>
+              ) : (
+                <div className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white/50 text-sm">
+                  {t("project_no_repo")}
+                </div>
+              )}
             </div>
-          </div>
+
+            {role && (
+              <>
+                <h3 className="mt-6 text-sm font-semibold text-white/90">
+                  {t("project_role")}
+                </h3>
+                <p className="mt-2 text-sm text-white/75 leading-6">{role}</p>
+              </>
+            )}
+          </aside>
         </div>
 
-        {(project.problem || project.solution || project.highlights) && (
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {project.problem && (
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                <h3 className="font-bold text-lg">
-                  {isFa ? "مسئله" : "Problem"}
-                </h3>
-                <p className="mt-2 text-sm text-white/80 leading-relaxed">
-                  {pickLang(project.problem, lang)}
-                </p>
-              </div>
-            )}
+        {/* Case study sections */}
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Section title={t("project_problem")} text={problem} />
+          <Section title={t("project_solution")} text={solution} />
 
-            {project.solution && (
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                <h3 className="font-bold text-lg">
-                  {isFa ? "راه‌حل" : "Solution"}
-                </h3>
-                <p className="mt-2 text-sm text-white/80 leading-relaxed">
-                  {pickLang(project.solution, lang)}
-                </p>
-              </div>
-            )}
+          <ListSection title={t("project_features")} items={features} />
+          <ListSection title={t("project_results")} items={results} />
+        </div>
 
-            {project.highlights?.length ? (
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-6 md:col-span-2">
-                <h3 className="font-bold text-lg">
-                  {isFa ? "نکات کلیدی" : "Highlights"}
-                </h3>
-                <ul className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 text-sm text-white/80 list-disc list-inside">
-                  {project.highlights.map((h, idx) => (
-                    <li key={idx}>{pickLang(h, lang) || h}</li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
+        {/* Screenshots */}
+        {screenshots.length > 0 && (
+          <div className="mt-10">
+            <h3 className="text-lg font-bold">{t("project_screenshots")}</h3>
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {screenshots.map((s, idx) => (
+                <figure
+                  key={`${s.src}-${idx}`}
+                  className="rounded-3xl overflow-hidden border border-white/10 bg-white/5"
+                >
+                  <img
+                    src={s.src}
+                    alt={pick(s.alt, lang) || title}
+                    className="w-full h-44 object-cover"
+                    loading="lazy"
+                  />
+                  {pick(s.caption, lang) ? (
+                    <figcaption className="px-4 py-3 text-sm text-white/70">
+                      {pick(s.caption, lang)}
+                    </figcaption>
+                  ) : null}
+                </figure>
+              ))}
+            </div>
           </div>
         )}
       </div>
-    </motion.section>
+    </section>
+  );
+}
+
+function Section({ title, text }) {
+  if (!text) return null;
+  return (
+    <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+      <h3 className="text-lg font-bold">{title}</h3>
+      <p className="mt-3 text-white/75 leading-7">{text}</p>
+    </div>
+  );
+}
+
+function ListSection({ title, items }) {
+  if (!items?.length) return null;
+  return (
+    <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+      <h3 className="text-lg font-bold">{title}</h3>
+      <ul className="mt-3 space-y-2">
+        {items.map((x, i) => (
+          <li key={i} className="text-white/75 leading-7 flex gap-2">
+            <span className="mt-2 h-1.5 w-1.5 rounded-full bg-white/40 shrink-0" />
+            <span>{x}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
