@@ -1,10 +1,17 @@
 import { Link } from "react-router-dom";
 
+function pickText(v, lang = "en") {
+  if (!v) return "";
+  if (typeof v === "string") return v;
+  return v?.[lang] || v?.en || v?.fa || "";
+}
+
 export default function ProjectCard({ item, lang = "fa" }) {
-  const title =
-    item.title?.[lang] || item.title?.fa || item.title?.en || "Untitled";
-  const summary =
-    item.summary?.[lang] || item.summary?.fa || item.summary?.en || "";
+  const normalizedLang = lang?.startsWith("fa") ? "fa" : "en";
+
+  const title = pickText(item.title, normalizedLang) || "Untitled";
+  const summary = pickText(item.summary, normalizedLang);
+  const period = pickText(item.period, normalizedLang);
   const image = item.image || "/assets/placeholder.svg";
 
   return (
@@ -23,9 +30,10 @@ export default function ProjectCard({ item, lang = "fa" }) {
           loading="lazy"
         />
         <h3 className="text-lg font-semibold text-center">{title}</h3>
-        {summary && (
+
+        {summary ? (
           <p className="text-sm text-gray-300 mt-2 text-center">{summary}</p>
-        )}
+        ) : null}
       </Link>
 
       <div className="flex flex-wrap gap-2 mt-4">
@@ -38,15 +46,15 @@ export default function ProjectCard({ item, lang = "fa" }) {
           </span>
         ))}
 
-        {item.period && (
+        {period ? (
           <span className="ml-auto text-xs bg-white/10 px-2 py-1 rounded-md text-gray-200">
-            {item.period}
+            {period}
           </span>
-        )}
+        ) : null}
       </div>
 
       <div className="mt-4 flex items-center justify-center gap-4">
-        {item.demo && (
+        {item.demo ? (
           <a
             className="text-blue-400 text-sm hover:underline"
             href={item.demo}
@@ -55,8 +63,8 @@ export default function ProjectCard({ item, lang = "fa" }) {
           >
             Demo ↗
           </a>
-        )}
-        {item.repo && (
+        ) : null}
+        {item.repo ? (
           <a
             className="text-blue-400 text-sm hover:underline"
             href={item.repo}
@@ -65,7 +73,7 @@ export default function ProjectCard({ item, lang = "fa" }) {
           >
             GitHub ↗
           </a>
-        )}
+        ) : null}
       </div>
     </article>
   );
