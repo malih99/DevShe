@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import SkillChips from "./SkillChips";
 
 export default function BioCard({ isFa, title, p1, p2, chips = [] }) {
+  const { t } = useTranslation();
+
   return (
     <motion.div
       className="lg:col-span-2 rounded-2xl p-6 border border-white/10 bg-white/5 backdrop-blur-xl shadow-xl"
@@ -16,7 +19,7 @@ export default function BioCard({ isFa, title, p1, p2, chips = [] }) {
 
       <div className="mt-6">
         <h3 className="text-sm font-semibold opacity-90">
-          {isFa ? "مهارت‌های کلیدی" : "Key Skills"}
+          {t("about_key_skills")}
         </h3>
         <SkillChips items={chips} />
       </div>

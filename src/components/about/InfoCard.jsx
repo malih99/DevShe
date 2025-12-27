@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import Divider from "./Divider";
+import { profile } from "../../constants/profile";
 
 export default function InfoCard({
   isFa,
@@ -10,6 +12,8 @@ export default function InfoCard({
   locationLabel,
   locationValue,
 }) {
+  const { t } = useTranslation();
+
   return (
     <motion.aside
       className="rounded-2xl p-6 border border-white/10 bg-white/5 backdrop-blur-xl shadow-xl space-y-5"
@@ -18,7 +22,6 @@ export default function InfoCard({
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: 0.05 }}
     >
-      {/* Avatar */}
       <div className="flex items-center gap-4">
         <div className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-600 to-blue-500" />
         <div>
@@ -31,13 +34,13 @@ export default function InfoCard({
 
       <InfoRow
         label={emailLabel}
-        value="maliheasadi99@gmail.com"
-        href="mailto:maliheasadi99@gmail.com"
+        value={profile.email}
+        href={`mailto:${profile.email}`}
       />
       <InfoRow
         label={githubLabel}
-        value="github.com/malih99"
-        href="https://github.com/malih99"
+        value={profile.githubText}
+        href={profile.githubUrl}
       />
       <InfoRow label={locationLabel} value={locationValue} />
 
@@ -45,17 +48,17 @@ export default function InfoCard({
 
       <div className="flex flex-col sm:flex-row gap-3">
         <a
-          href="/assets/resume.pdf"
+          href={profile.resumeHref}
           download
           className="flex-1 text-center px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 font-medium shadow-lg hover:opacity-95 transition"
         >
-          {isFa ? "دانلود رزومه" : "Download Resume"}
+          {t("about_cta_download")}
         </a>
         <a
           href="/contact"
           className="flex-1 text-center px-4 py-2.5 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition"
         >
-          {isFa ? "ارتباط" : "Contact"}
+          {t("about_cta_contact")}
         </a>
       </div>
     </motion.aside>

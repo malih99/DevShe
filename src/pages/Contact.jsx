@@ -3,13 +3,14 @@ import { useTranslation } from "react-i18next";
 import { Mail, Github, Linkedin } from "lucide-react";
 import ContactForm from "../components/contact/ContactForm";
 import ContactInfo from "../components/contact/ContactInfo";
+import { profile } from "../constants/profile";
 
 export default function Contact() {
   const { t } = useTranslation();
 
   return (
     <motion.section
-      className="min-h-screen w-screen px-6 py-16 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+      className="min-h-screen w-full px-6 py-16 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 40 }}
@@ -20,7 +21,6 @@ export default function Contact() {
       </h3>
 
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Sidebar: info */}
         <motion.aside
           className="md:col-span-1 rounded-2xl p-6 border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/5 backdrop-blur"
           initial={{ opacity: 0, x: -20 }}
@@ -32,25 +32,24 @@ export default function Contact() {
             <ContactInfo
               icon={<Mail size={18} />}
               title={t("contact_email_label")}
-              value="maliheasadi99@gmail.com"
-              link="mailto:maliheasadi99@gmail.com"
+              value={profile.email}
+              link={`mailto:${profile.email}`}
             />
             <ContactInfo
               icon={<Github size={18} />}
               title={t("contact_github_label")}
-              value="github.com/malih99"
-              link="https://github.com/malih99"
+              value={profile.githubText}
+              link={profile.githubUrl}
             />
             <ContactInfo
               icon={<Linkedin size={18} />}
               title={t("contact_linkedin_label")}
-              value="linkedin.com/in/malih-asadi-a151b0289"
-              link="https://www.linkedin.com/in/malih-asadi-a151b0289"
+              value={profile.linkedinText}
+              link={profile.linkedinUrl}
             />
           </div>
         </motion.aside>
 
-        {/* Form */}
         <ContactForm />
       </div>
     </motion.section>
