@@ -1,54 +1,25 @@
 import { useTranslation } from "react-i18next";
 import { Sun, Moon, Globe2 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import useThemeStore from "../store/themeStore";
 
 export default function Header() {
   const { t, i18n } = useTranslation();
-  const [dark, setDark] = useState(false);
+  const { theme, toggleTheme } = useThemeStore();
   const isFa = i18n.language === "fa";
+  const isDark = theme === "dark";
 
-  // Init theme + dir based on stored prefs
-  useEffect(() => {
-    const root = document.documentElement;
-
-    // theme
-    const storedTheme = localStorage.getItem("theme");
-    const isDark = storedTheme
-      ? storedTheme === "dark"
-      : root.classList.contains("dark");
-    if (isDark) root.classList.add("dark");
-    else root.classList.remove("dark");
-    setDark(isDark);
-
-    // lang/dir
-    const lang = localStorage.getItem("lang") || i18n.language || "en";
-    applyLang(lang);
-  }, []); // eslint-disable-line
-
-  const applyLang = (lang) => {
-    const root = document.documentElement;
-    i18n.changeLanguage(lang);
-    localStorage.setItem("lang", lang);
-    root.lang = lang;
-    root.dir = lang === "fa" ? "rtl" : "ltr";
-  };
+  const navClass = ({ isActive }) =>
+    [
+      "px-3 py-2 rounded-xl transition",
+      isActive
+        ? "bg-black/10 dark:bg-white/10 font-semibold"
+        : "hover:bg-black/5 dark:hover:bg-white/10",
+    ].join(" ");
 
   const setLang = (lang) => {
     if (lang === i18n.language) return;
-    applyLang(lang);
-  };
-
-  const toggleTheme = () => {
-    const root = document.documentElement;
-    const next = !dark;
-    if (next) {
-      root.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      root.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-    setDark(next);
+    i18n.changeLanguage(lang);
   };
 
   return (
@@ -58,38 +29,26 @@ export default function Header() {
       border-b border-black/5 dark:border-white/10 sticky top-0 z-50"
     >
       {/* Brand */}
-      <a href="/" className="font-extrabold tracking-tight text-lg">
+      <NavLink to="/" className="font-extrabold tracking-tight text-lg">
         DevShe
-      </a>
+      </NavLink>
 
       {/* Nav */}
       <nav className="flex items-center gap-2">
-        <a
-          href="/"
-          className="px-3 py-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/10"
-        >
+        <NavLink to="/" className={navClass}>
           {t("nav_home")}
-        </a>
-        <a
-          href="/about"
-          className="px-3 py-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/10"
-        >
+        </NavLink>
+        <NavLink to="/about" className={navClass}>
           {t("nav_about")}
-        </a>
-        <a
-          href="/projects"
-          className="px-3 py-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/10"
-        >
+        </NavLink>
+        <NavLink to="/projects" className={navClass}>
           {t("nav_projects")}
-        </a>
-        <a
-          href="/contact"
-          className="px-3 py-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/10"
-        >
+        </NavLink>
+        <NavLink to="/contact" className={navClass}>
           {t("nav_contact")}
-        </a>
+        </NavLink>
 
-        {/* Theme button */}
+        {/* Theme button (from store) */}
         <button
           onClick={toggleTheme}
           className="ml-2 p-2 rounded-xl border border-black/10 dark:border-white/15
@@ -98,7 +57,7 @@ export default function Header() {
           aria-label="Toggle theme"
           title="Toggle theme"
         >
-          {dark ? <Sun size={16} /> : <Moon size={16} />}
+          {isDark ? <Sun size={16} /> : <Moon size={16} />}
         </button>
 
         {/* Language segmented control */}
@@ -109,12 +68,12 @@ export default function Header() {
                      border border-black/10 dark:border-white/15
                      bg-white/70 dark:bg-white/5"
         >
-          <span className="sr-only">Language</span>
           <Globe2
             size={14}
             className="mx-1.5 opacity-70 text-gray-700 dark:text-gray-300"
             aria-hidden="true"
           />
+
           <button
             role="tab"
             aria-selected={!isFa}
@@ -128,6 +87,7 @@ export default function Header() {
           >
             EN
           </button>
+
           <button
             role="tab"
             aria-selected={isFa}
