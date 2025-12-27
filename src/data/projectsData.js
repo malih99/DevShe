@@ -53,6 +53,20 @@ const projects = [
     demo: "http://menu.hesabesh.com/iq/",
     image: "/assets/menu-icon.svg",
   },
+  {
+    id: "fuzzer-orchestrator",
+    slug: "fuzzer-orchestrator",
+    title: { fa: "Fuzzer Orchestrator", en: "Fuzzer Orchestrator" },
+    summary: {
+      fa: "طراحی و توسعه اورکستریتور فازر از صفر: مدیریت Jobهای Fuzz/Compile، لاگ‌ها و گراف وابستگی.",
+      en: "Designed & built a Fuzzer Orchestrator from scratch: managing Fuzz/Compile jobs, logs, and dependency graphs.",
+    },
+    stack: ["React", "Vite", "TailwindCSS", "MUI", "ReactFlow", "REST API"],
+    period: "1403-1404",
+    repo: "https://github.com/malih99",
+    demo: "",
+    image: "/assets/placeholder.svg",
+  },
 ];
 
 export default projects;

@@ -13,29 +13,24 @@ function applyTheme(t) {
   if (typeof document === "undefined") return;
   // کلاس دارک روی html
   document.documentElement.classList.toggle("dark", t === "dark");
-  // color-scheme برای کامپوننت‌های بومی
+  // هماهنگی کامپوننت‌های بومی
   document.documentElement.style.colorScheme = t;
-
-  // --- تغییر favicon بر اساس تم ---
+  // تغییر favicon
   const link = document.querySelector("link#app-favicon");
-  if (link) {
+  if (link)
     link.setAttribute(
       "href",
       t === "dark" ? "/favicon-dark.svg" : "/favicon-light.svg"
     );
+  // (اختیاری) theme-color (برای موبایل)
+  let meta = document.querySelector('meta[name="theme-color"][data-managed]');
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("name", "theme-color");
+    meta.setAttribute("data-managed", "true");
+    document.head.appendChild(meta);
   }
-
-  // (اختیاری) تغییر theme-color (نوار آدرس موبایل)
-  let themeMeta = document.querySelector(
-    'meta[name="theme-color"][data-managed]'
-  );
-  if (!themeMeta) {
-    themeMeta = document.createElement("meta");
-    themeMeta.setAttribute("name", "theme-color");
-    themeMeta.setAttribute("data-managed", "true");
-    document.head.appendChild(themeMeta);
-  }
-  themeMeta.setAttribute("content", t === "dark" ? "#0c0f18" : "#ffffff");
+  meta.setAttribute("content", t === "dark" ? "#0c0f18" : "#ffffff");
 }
 
 const initial = getInitialTheme();

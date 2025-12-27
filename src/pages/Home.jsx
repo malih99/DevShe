@@ -47,9 +47,9 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold leading-tight">
-              DevDash — Admin Panel & Dashboard
-            </h2>
+            <h3 className="text-xl md:text-2xl font-bold leading-tight">
+              DevShe — Admin Panel & Dashboard
+            </h3>
             <p className="text-base text-gray-300 leading-relaxed">
               A modular admin dashboard built with React and Tailwind. State is
               managed via Zustand & React Query; data grids with TanStack Table;
@@ -95,7 +95,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <h3 className="text-xl font-bold mb-1">DevDash</h3>
+            <h3 className="text-xl font-bold mb-1">DevShe</h3>
             <p className="text-sm text-gray-400">
               Admin Panel & Dashboard Components
             </p>

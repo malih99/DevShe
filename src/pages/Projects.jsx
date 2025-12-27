@@ -41,9 +41,9 @@ export default function Projects() {
       exit={{ opacity: 0, y: 40 }}
       transition={{ duration: 0.8 }}
     >
-      <h2 className="text-3xl font-bold mb-6 border-b pb-4 border-purple-700">
+      <h3 className="text-2xl font-extrabold mb-5 tracking-tight">
         {isFa ? "پروژه‌ها" : "My Projects"}
-      </h2>
+      </h3>
 
       {/* فیلترها */}
       <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-between mb-8">
