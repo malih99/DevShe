@@ -1,104 +1,43 @@
-import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
+import { useLocation } from "react-router-dom";
 
-function upsertMeta(selector, attrs) {
-  let el = document.head.querySelector(selector);
-  if (!el) {
-    el = document.createElement("meta");
-    document.head.appendChild(el);
-  }
-  Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
-}
+const SITE_URL = (import.meta?.env?.VITE_SITE_URL || "").replace(/\/$/, "");
 
-function upsertLink(selector, attrs) {
-  let el = document.head.querySelector(selector);
-  if (!el) {
-    el = document.createElement("link");
-    document.head.appendChild(el);
-  }
-  Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
-}
+export default function Seo({ title, description, image, noIndex = false }) {
+  const { pathname } = useLocation();
 
-export default function SEO({
-  title,
-  description,
-  image,
-  url,
-  noIndex = false,
-}) {
-  useEffect(() => {
-    const safeTitle = title || "DevShe";
-    const safeDesc = description || "";
-    const safeUrl = url || window.location.href;
+  const canonical = SITE_URL ? `${SITE_URL}${pathname}` : undefined;
+  const img =
+    image && SITE_URL && image.startsWith("/") ? `${SITE_URL}${image}` : image;
 
-    document.title = safeTitle;
+  return (
+    <Helmet>
+      {title ? <title>{title}</title> : null}
+      {description ? <meta name="description" content={description} /> : null}
 
-    upsertMeta('meta[name="description"]', {
-      name: "description",
-      content: safeDesc,
-    });
+      {canonical ? <link rel="canonical" href={canonical} /> : null}
 
-    upsertMeta('meta[property="og:title"]', {
-      property: "og:title",
-      content: safeTitle,
-    });
-    upsertMeta('meta[property="og:description"]', {
-      property: "og:description",
-      content: safeDesc,
-    });
-    upsertMeta('meta[property="og:type"]', {
-      property: "og:type",
-      content: "website",
-    });
-    upsertMeta('meta[property="og:url"]', {
-      property: "og:url",
-      content: safeUrl,
-    });
+      {/* OpenGraph */}
+      {title ? <meta property="og:title" content={title} /> : null}
+      {description ? (
+        <meta property="og:description" content={description} />
+      ) : null}
+      {canonical ? <meta property="og:url" content={canonical} /> : null}
+      <meta property="og:type" content="website" />
+      {img ? <meta property="og:image" content={img} /> : null}
 
-    if (image) {
-      const absoluteImage = image.startsWith("http")
-        ? image
-        : `${window.location.origin}${
-            image.startsWith("/") ? "" : "/"
-          }${image}`;
+      {/* Twitter */}
+      <meta
+        name="twitter:card"
+        content={img ? "summary_large_image" : "summary"}
+      />
+      {title ? <meta name="twitter:title" content={title} /> : null}
+      {description ? (
+        <meta name="twitter:description" content={description} />
+      ) : null}
+      {img ? <meta name="twitter:image" content={img} /> : null}
 
-      upsertMeta('meta[property="og:image"]', {
-        property: "og:image",
-        content: absoluteImage,
-      });
-      upsertMeta('meta[name="twitter:card"]', {
-        name: "twitter:card",
-        content: "summary_large_image",
-      });
-      upsertMeta('meta[name="twitter:image"]', {
-        name: "twitter:image",
-        content: absoluteImage,
-      });
-    } else {
-      upsertMeta('meta[name="twitter:card"]', {
-        name: "twitter:card",
-        content: "summary",
-      });
-    }
-
-    upsertMeta('meta[name="twitter:title"]', {
-      name: "twitter:title",
-      content: safeTitle,
-    });
-    upsertMeta('meta[name="twitter:description"]', {
-      name: "twitter:description",
-      content: safeDesc,
-    });
-
-    upsertLink('link[rel="canonical"]', {
-      rel: "canonical",
-      href: safeUrl,
-    });
-
-    upsertMeta('meta[name="robots"]', {
-      name: "robots",
-      content: noIndex ? "noindex, nofollow" : "index, follow",
-    });
-  }, [title, description, image, url, noIndex]);
-
-  return null;
+      {noIndex ? <meta name="robots" content="noindex,nofollow" /> : null}
+    </Helmet>
+  );
 }

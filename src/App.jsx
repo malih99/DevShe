@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
@@ -9,15 +8,10 @@ import Projects from "./pages/Projects";
 import ProjectDetails from "./pages/ProjectDetails";
 import Contact from "./pages/Contact";
 import Resume from "./pages/Resume";
-import useThemeStore from "./store/themeStore";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const location = useLocation();
-  const { theme } = useThemeStore();
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-  }, [theme]);
 
   return (
     <Layout>
@@ -29,6 +23,9 @@ function App() {
           <Route path="/projects/:slug" element={<ProjectDetails />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/resume" element={<Resume />} />
+
+          {/* 404 */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AnimatePresence>
     </Layout>

@@ -19,6 +19,11 @@ function syncHtmlLangDir(lang) {
   root.dir = lang === "fa" ? "rtl" : "ltr";
 }
 
+export function normalizeLang(lang = "en") {
+  const l = String(lang || "en").toLowerCase();
+  return l.startsWith("fa") ? "fa" : "en";
+}
+
 const initialLang = getInitialLang();
 
 i18n.use(initReactI18next).init({
@@ -28,20 +33,42 @@ i18n.use(initReactI18next).init({
   },
   lng: initialLang,
   fallbackLng: "en",
-  interpolation: {
-    escapeValue: false,
-  },
+  interpolation: { escapeValue: false },
 });
 
-syncHtmlLangDir(i18n.language);
+syncHtmlLangDir(normalizeLang(i18n.language));
 
 i18n.on("languageChanged", (lang) => {
-  syncHtmlLangDir(lang);
+  const n = normalizeLang(lang);
+  syncHtmlLangDir(n);
   if (typeof window !== "undefined") {
     try {
-      localStorage.setItem("lang", lang);
+      localStorage.setItem("lang", n);
     } catch {}
   }
 });
 
 export default i18n;
+
+export function getText(value, lang = "en") {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+
+  const n = normalizeLang(lang);
+  const v = value?.[n] ?? value?.en ?? value?.fa ?? "";
+
+  if (Array.isArray(v)) return v.join(" • ");
+  return typeof v === "string" ? v : "";
+}
+
+export function getArray(value, lang = "en") {
+  if (!value) return [];
+  if (Array.isArray(value)) return value;
+
+  const n = normalizeLang(lang);
+  const v = value?.[n] ?? value?.en ?? value?.fa;
+
+  if (Array.isArray(v)) return v;
+  if (typeof v === "string" && v.trim()) return [v];
+  return [];
+}
