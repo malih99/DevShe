@@ -1,28 +1,49 @@
 import { create } from "zustand";
 
+function safeGet(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function safeSet(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {}
+}
+
 function getInitialTheme() {
   if (typeof window === "undefined") return "light";
-  const stored = localStorage.getItem("theme");
-  if (stored) return stored;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
+
+  const stored = safeGet("theme");
+  if (stored === "light" || stored === "dark") return stored;
+
+  return window.matchMedia?.("(prefers-color-scheme: dark)")?.matches
     ? "dark"
     : "light";
 }
 
 function applyTheme(t) {
   if (typeof document === "undefined") return;
-  // کلاس دارک روی html
+
+  // dark class on <html>
   document.documentElement.classList.toggle("dark", t === "dark");
-  // هماهنگی کامپوننت‌های بومی
+
+  // native form controls styling
   document.documentElement.style.colorScheme = t;
-  // تغییر favicon
+
+  // favicon swap (optional)
   const link = document.querySelector("link#app-favicon");
-  if (link)
+  if (link) {
     link.setAttribute(
       "href",
       t === "dark" ? "/favicon-dark.svg" : "/favicon-light.svg"
     );
-  // (اختیاری) theme-color (برای موبایل)
+  }
+
+  // theme-color meta for mobile browsers (optional)
   let meta = document.querySelector('meta[name="theme-color"][data-managed]');
   if (!meta) {
     meta = document.createElement("meta");
@@ -36,19 +57,23 @@ function applyTheme(t) {
 const initial = getInitialTheme();
 if (typeof window !== "undefined") applyTheme(initial);
 
-export const useThemeStore = create((set, get) => ({
+const useThemeStore = create((set, get) => ({
   theme: initial,
+
   setTheme: (newTheme) => {
-    localStorage.setItem("theme", newTheme);
-    applyTheme(newTheme);
-    set({ theme: newTheme });
+    const t = newTheme === "dark" ? "dark" : "light";
+    safeSet("theme", t);
+    applyTheme(t);
+    set({ theme: t });
   },
+
   toggleTheme: () => {
     const next = get().theme === "light" ? "dark" : "light";
-    localStorage.setItem("theme", next);
+    safeSet("theme", next);
     applyTheme(next);
     set({ theme: next });
   },
 }));
 
 export default useThemeStore;
+export { useThemeStore };
