@@ -1,12 +1,10 @@
 import ProjectCard from "./ProjectCard";
 
-export default function ProjectGrid({
-  items = [],
-  lang = "fa",
-  emptyText = "چیزی پیدا نشد.",
-}) {
+export default function ProjectGrid({ items = [], lang = "en", emptyText }) {
   if (!items.length) {
-    return <p className="mt-10 text-center text-gray-400">{emptyText}</p>;
+    return (
+      <p className="mt-10 text-center text-white/50 text-sm">{emptyText}</p>
+    );
   }
 
   return (
