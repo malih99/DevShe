@@ -3,6 +3,11 @@ import { initReactI18next } from "react-i18next";
 import en from "./en.json";
 import fa from "./fa.json";
 
+export function normalizeLang(lang = "en") {
+  const l = String(lang || "en").toLowerCase();
+  return l.startsWith("fa") ? "fa" : "en";
+}
+
 function getInitialLang() {
   if (typeof window === "undefined") return "en";
   try {
@@ -17,11 +22,6 @@ function syncHtmlLangDir(lang) {
   const root = document.documentElement;
   root.lang = lang;
   root.dir = lang === "fa" ? "rtl" : "ltr";
-}
-
-export function normalizeLang(lang = "en") {
-  const l = String(lang || "en").toLowerCase();
-  return l.startsWith("fa") ? "fa" : "en";
 }
 
 const initialLang = getInitialLang();
@@ -39,36 +39,27 @@ i18n.use(initReactI18next).init({
 syncHtmlLangDir(normalizeLang(i18n.language));
 
 i18n.on("languageChanged", (lang) => {
-  const n = normalizeLang(lang);
-  syncHtmlLangDir(n);
+  const normalized = normalizeLang(lang);
+  syncHtmlLangDir(normalized);
   if (typeof window !== "undefined") {
     try {
-      localStorage.setItem("lang", n);
+      localStorage.setItem("lang", normalized);
     } catch {}
   }
 });
-
-export default i18n;
 
 export function getText(value, lang = "en") {
   if (!value) return "";
   if (typeof value === "string") return value;
 
-  const n = normalizeLang(lang);
-  const v = value?.[n] ?? value?.en ?? value?.fa ?? "";
-
-  if (Array.isArray(v)) return v.join(" • ");
-  return typeof v === "string" ? v : "";
+  const normalized = normalizeLang(lang);
+  return value?.[normalized] || value?.en || value?.fa || "";
 }
 
 export function getArray(value, lang = "en") {
-  if (!value) return [];
-  if (Array.isArray(value)) return value;
-
-  const n = normalizeLang(lang);
-  const v = value?.[n] ?? value?.en ?? value?.fa;
-
+  const v = getText(value, lang);
   if (Array.isArray(v)) return v;
-  if (typeof v === "string" && v.trim()) return [v];
-  return [];
+  return v ? [v] : [];
 }
+
+export default i18n;
