@@ -15,7 +15,6 @@ export default function Resume() {
           رزومه
         </h1>
 
-        {/* درباره من */}
         <section>
           <SectionTitle icon={<User size={20} />} title="درباره من" />
           <p className="text-gray-300 leading-relaxed text-sm mt-2">
@@ -42,13 +41,11 @@ export default function Resume() {
           </div>
         </section>
 
-        {/* زبان‌ها */}
         <section>
           <SectionTitle icon={<Globe size={20} />} title="زبان" />
           <p className="text-sm text-gray-300 mt-2">انگلیسی: ★★★★☆</p>
         </section>
 
-        {/* سوابق شغلی */}
         <section>
           <SectionTitle icon={<Briefcase size={20} />} title="سوابق شغلی" />
           <div className="divide-y divide-gray-700 mt-4">
@@ -65,7 +62,6 @@ export default function Resume() {
           </div>
         </section>
 
-        {/* پروژه‌ها */}
         <section>
           <SectionTitle icon={<BookOpen size={20} />} title="پروژه‌ها" />
           <ul className="list-disc pl-6 text-sm text-gray-300 space-y-2 mt-2">
@@ -91,7 +87,6 @@ export default function Resume() {
           </ul>
         </section>
 
-        {/* تحصیلات */}
         <section>
           <SectionTitle icon={<BookOpen size={20} />} title="تحصیلات" />
           <div className="text-sm mt-2">
@@ -100,7 +95,6 @@ export default function Resume() {
           </div>
         </section>
 
-        {/* اطلاعات تماس */}
         <section>
           <SectionTitle icon={<Mail size={20} />} title="تماس" />
           <ul className="text-sm text-gray-300 mt-2 space-y-1">
@@ -121,7 +115,6 @@ export default function Resume() {
           </ul>
         </section>
 
-        {/* دانلود رزومه */}
         <div className="text-center pt-8">
           <a
             href="/assets/resume.pdf"

@@ -31,10 +31,48 @@ function upsertProperty(property, content) {
   tag.setAttribute("content", content);
 }
 
+function getAbsoluteUrlMaybe(url) {
+  if (!url) return "";
+  try {
+    // If already absolute => keep
+    const u = new URL(url);
+    return u.toString();
+  } catch {
+    // relative path => make absolute if possible
+    if (typeof window === "undefined") return url;
+    try {
+      return new URL(url, window.location.origin).toString();
+    } catch {
+      return url;
+    }
+  }
+}
+
+function upsertCanonical(href) {
+  if (typeof document === "undefined") return;
+
+  const selector = `link[rel="canonical"][data-managed="true"]`;
+  let link = document.querySelector(selector);
+
+  if (!href) {
+    if (link) link.remove();
+    return;
+  }
+
+  if (!link) {
+    link = document.createElement("link");
+    link.setAttribute("rel", "canonical");
+    link.setAttribute("data-managed", "true");
+    document.head.appendChild(link);
+  }
+  link.setAttribute("href", href);
+}
+
 export default function Seo({
   title,
   description,
   canonical, // optional
+  image, // optional: og:image + twitter:image
   noIndex = false,
 }) {
   const { t } = useTranslation();
@@ -46,8 +84,12 @@ export default function Seo({
     const finalTitle = title || t("seo_default_title");
     const finalDesc = description || t("seo_default_desc");
 
+    const pageUrl =
+      typeof window !== "undefined" ? window.location.href : undefined;
+
     document.title = finalTitle;
 
+    // Basic
     upsertMeta("description", finalDesc);
 
     // Robots
@@ -58,26 +100,26 @@ export default function Seo({
     upsertProperty("og:title", finalTitle);
     upsertProperty("og:description", finalDesc);
     upsertProperty("og:type", "website");
+    if (pageUrl) upsertProperty("og:url", pageUrl);
 
     // Twitter (basic)
     upsertMeta("twitter:card", "summary");
     upsertMeta("twitter:title", finalTitle);
     upsertMeta("twitter:description", finalDesc);
 
-    // Canonical (optional)
-    if (canonical) {
-      let link = document.querySelector(
-        `link[rel="canonical"][data-managed="true"]`
-      );
-      if (!link) {
-        link = document.createElement("link");
-        link.setAttribute("rel", "canonical");
-        link.setAttribute("data-managed", "true");
-        document.head.appendChild(link);
-      }
-      link.setAttribute("href", canonical);
+    // Image (optional)
+    const absImg = getAbsoluteUrlMaybe(image);
+    if (absImg) {
+      upsertProperty("og:image", absImg);
+      upsertMeta("twitter:image", absImg);
+      // if you prefer large card when image exists:
+      upsertMeta("twitter:card", "summary_large_image");
     }
-  }, [title, description, canonical, noIndex, t]);
+
+    // Canonical (optional)
+    const absCanonical = getAbsoluteUrlMaybe(canonical);
+    upsertCanonical(absCanonical || "");
+  }, [title, description, canonical, image, noIndex, t]);
 
   return null;
 }
