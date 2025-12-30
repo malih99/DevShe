@@ -4,7 +4,7 @@ import Seo from "../components/Seo";
 
 export default function NotFound() {
   const { t, i18n } = useTranslation();
-  const isFa = (i18n.language || "en").toLowerCase().startsWith("fa");
+  const isFa = i18n.language === "fa";
 
   return (
     <>
@@ -19,16 +19,18 @@ export default function NotFound() {
         dir={isFa ? "rtl" : "ltr"}
       >
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-2xl font-extrabold">
-            {t("project_not_found_title")}
+          <h1 className="text-3xl font-extrabold">
+            {isFa ? "صفحه پیدا نشد" : "Page Not Found"}
           </h1>
-          <p className="mt-2 text-white/70">{t("project_not_found_desc")}</p>
+          <p className="mt-2 text-white/70">
+            {isFa ? "این آدرس وجود ندارد." : "This route does not exist."}
+          </p>
 
           <Link
             to="/"
             className="inline-flex mt-6 items-center gap-2 px-4 py-2 rounded-2xl bg-white/10 border border-white/10 hover:bg-white/15 transition"
           >
-            {isFa ? "بازگشت به خانه" : "Back to Home"}
+            {isFa ? "بازگشتsشت به خانه" : "Back to Home"}
           </Link>
         </div>
       </section>
