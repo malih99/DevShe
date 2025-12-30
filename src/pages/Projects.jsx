@@ -2,10 +2,11 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Search, X } from "lucide-react";
+
 import projects from "../data/projectsData";
 import ProjectGrid from "../components/ProjectGrid";
 import { getText } from "../i18n/i18n";
-import Seo from "../components/SEO";
+import Seo from "../components/Seo";
 
 export default function Projects() {
   const { i18n, t } = useTranslation();
