@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ExternalLink, Github, ArrowLeft, ArrowRight } from "lucide-react";
+
 import projects from "../data/projectsData";
 import Seo from "../components/Seo";
 import { getText, getArray, normalizeLang } from "../i18n/i18n";
@@ -60,10 +61,8 @@ export default function ProjectDetails() {
   const role = getText(cs.role, lang);
   const features = getArray(cs.features, lang);
   const results = getArray(cs.results, lang);
-
   const screenshots = Array.isArray(cs.screenshots) ? cs.screenshots : [];
 
-  // SEO title/desc per project
   const seoTitle = `${title} | ${t("seo_site_name")}`;
   const seoDesc = summary || t("seo_projects_desc");
 
@@ -135,7 +134,6 @@ export default function ProjectDetails() {
                 </div>
               </div>
 
-              {/* Stack chips */}
               <div className="mt-6 flex flex-wrap gap-2">
                 {(project.stack || []).map((tech) => (
                   <span
@@ -148,7 +146,6 @@ export default function ProjectDetails() {
               </div>
             </div>
 
-            {/* Sticky side summary */}
             <aside className="lg:sticky lg:top-24 h-fit rounded-3xl border border-white/10 bg-white/5 p-6">
               <h3 className="text-sm font-semibold text-white/90">
                 {t("project_links")}
@@ -205,7 +202,6 @@ export default function ProjectDetails() {
             </aside>
           </div>
 
-          {/* Case study sections */}
           <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Section title={t("project_problem")} text={problem} />
             <Section title={t("project_solution")} text={solution} />
@@ -213,7 +209,6 @@ export default function ProjectDetails() {
             <ListSection title={t("project_results")} items={results} />
           </div>
 
-          {/* Screenshots */}
           {screenshots.length > 0 && (
             <div className="mt-10">
               <h3 className="text-lg font-bold">{t("project_screenshots")}</h3>
