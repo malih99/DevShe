@@ -10,32 +10,52 @@ export default function CardTeaser({
 }) {
   return (
     <motion.article
-      className="bg-[#1f1d2c] p-6 rounded-xl flex flex-col items-center text-center shadow-md hover:shadow-blue-600/30 transition duration-300 focus-within:ring-2 focus-within:ring-blue-500"
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.98 }}
+      className={[
+        "rounded-3xl p-6",
+        "border border-black/10 dark:border-white/10",
+        "bg-white/70 dark:bg-white/5 backdrop-blur",
+        "shadow-[0_20px_60px_-45px_rgba(0,0,0,0.7)]",
+        "hover:translate-y-[-2px] transition",
+        "focus-within:ring-2 focus-within:ring-indigo-500/60",
+      ].join(" ")}
+      whileHover={{ scale: 1.01 }}
+      whileTap={{ scale: 0.99 }}
     >
-      {img && (
-        <img src={img} alt={title} className="w-16 h-16 mb-4" loading="lazy" />
-      )}
-      <h4 className="text-lg font-semibold">{title}</h4>
-      {subtitle && <p className="text-xs text-gray-400 mt-1">{subtitle}</p>}
+      <div className="flex items-start gap-4">
+        {img && (
+          <div className="h-12 w-12 rounded-2xl grid place-items-center bg-black/[0.03] dark:bg-white/5 border border-black/10 dark:border-white/10">
+            <img src={img} alt={title} className="w-7 h-7" loading="lazy" />
+          </div>
+        )}
 
-      {!!badges.length && (
-        <div className="flex flex-wrap gap-2 mt-4 justify-center">
-          {badges.map((b) => (
-            <span
-              key={b}
-              className="text-[11px] bg-white/10 border border-white/10 px-2 py-1 rounded-full"
-            >
-              {b}
-            </span>
-          ))}
+        <div className="min-w-0">
+          <h4 className="text-lg font-semibold text-slate-900 dark:text-white">
+            {title}
+          </h4>
+          {subtitle && (
+            <p className="mt-1 text-sm text-slate-600 dark:text-white/60">
+              {subtitle}
+            </p>
+          )}
+
+          {!!badges.length && (
+            <div className="flex flex-wrap gap-2 mt-3">
+              {badges.map((b) => (
+                <span
+                  key={b}
+                  className="text-[11px] px-2 py-1 rounded-full bg-black/[0.03] dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-700 dark:text-white/70"
+                >
+                  {b}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       <Link
         to={to}
-        className="mt-4 text-sm text-blue-300 hover:underline"
+        className="mt-5 inline-flex text-sm font-semibold text-indigo-600 dark:text-blue-300 hover:underline"
         aria-label={`${title} details`}
       >
         Explore →
