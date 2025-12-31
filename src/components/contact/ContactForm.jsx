@@ -8,6 +8,7 @@ import {
   User as UserIcon,
   Type as SubjectIcon,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { sendWithEmailJS } from "../../lib/email/sendWithEmailJS";
 import {
@@ -16,7 +17,68 @@ import {
 } from "../../constants/emailTemplate";
 import InputWithIcon from "./InputWithIcon";
 
+function normalizeLang(lng) {
+  const l = (lng || "en").toLowerCase();
+  return l.startsWith("fa") ? "fa" : "en";
+}
+
 export default function ContactForm() {
+  const { i18n } = useTranslation();
+  const lang = normalizeLang(i18n.language);
+  const isFa = lang === "fa";
+
+  const ui = isFa
+    ? {
+        formTitle: "فرم تماس",
+        formDesc: "ایمیل را دقیق وارد کنید تا پاسخ مستقیم به آن ارسال شود.",
+        name: "نام",
+        namePh: "نام شما",
+        email: "ایمیل",
+        emailPh: "example@email.com",
+        emailHelper: "این ایمیل به عنوان Reply-To تنظیم می‌شود.",
+        subject: "موضوع (اختیاری)",
+        subjectPh: "درباره چه موضوعی می‌نویسید؟",
+        message: "پیام",
+        messagePh: "سلام…",
+        privacy: "با ارسال فرم، فقط اطلاعات لازم برای پاسخ ذخیره می‌شود.",
+        send: "ارسال پیام",
+        sending: "در حال ارسال…",
+        ok: "پیام با موفقیت ارسال شد ✨",
+        fail: "ارسال ناموفق بود. دوباره تلاش کنید.",
+        v: {
+          nameReq: "نام الزامی است",
+          emailReq: "ایمیل الزامی است",
+          emailInvalid: "ایمیل معتبر نیست",
+          subjMax: "حداکثر ۱۲۰ کاراکتر",
+          msgReq: "پیام را وارد کنید",
+        },
+      }
+    : {
+        formTitle: "Contact form",
+        formDesc: "Enter your email correctly so I can reply to you directly.",
+        name: "Name",
+        namePh: "Your name",
+        email: "Email",
+        emailPh: "example@email.com",
+        emailHelper: "This email will be used as Reply-To.",
+        subject: "Subject (optional)",
+        subjectPh: "What is this about?",
+        message: "Message",
+        messagePh: "Hi…",
+        privacy: "By submitting, only necessary info for replying is stored.",
+        send: "Send message",
+        sending: "Sending…",
+        ok: "Message sent successfully ✨",
+        fail: "Sending failed. Please try again.",
+        v: {
+          nameReq: "Name is required",
+          emailReq: "Email is required",
+          emailInvalid: "Invalid email",
+          subjMax: "Max 120 characters",
+          msgReq: "Please enter a message",
+        },
+      };
+
   const formik = useFormik({
     initialValues: {
       from_name: "",
@@ -26,12 +88,10 @@ export default function ContactForm() {
       website: "", // honeypot
     },
     validationSchema: Yup.object({
-      from_name: Yup.string().required("نام الزامی است"),
-      reply_to: Yup.string()
-        .email("ایمیل معتبر نیست")
-        .required("ایمیل الزامی است"),
-      subject: Yup.string().max(120, "حداکثر ۱۲۰ کاراکتر"),
-      message: Yup.string().required("پیام را وارد کنید"),
+      from_name: Yup.string().required(ui.v.nameReq),
+      reply_to: Yup.string().email(ui.v.emailInvalid).required(ui.v.emailReq),
+      subject: Yup.string().max(120, ui.v.subjMax),
+      message: Yup.string().required(ui.v.msgReq),
       website: Yup.string().max(0),
     }),
     onSubmit: async (values, actions) => {
@@ -39,16 +99,16 @@ export default function ContactForm() {
       try {
         await sendWithEmailJS({
           [F.FROM_NAME]: values.from_name,
-          [F.REPLY_TO]: values.reply_to, // Reply-To واقعی
+          [F.REPLY_TO]: values.reply_to,
           [F.SUBJECT]: values.subject || DEFAULT_SUBJECT,
           [F.MESSAGE]: values.message,
           [F.TO_NAME]: "Malihe Asadi",
         });
-        toast.success("پیام با موفقیت ارسال شد ✨");
+        toast.success(ui.ok);
         actions.resetForm();
       } catch (err) {
         console.error(err);
-        toast.error("ارسال ناموفق بود. دوباره تلاش کنید.");
+        toast.error(ui.fail);
       } finally {
         actions.setSubmitting(false);
       }
@@ -58,17 +118,25 @@ export default function ContactForm() {
   return (
     <motion.form
       onSubmit={formik.handleSubmit}
-      className="lg:col-span-2 rounded-2xl shadow-xl border border-transparent bg-white/5 backdrop-blur-xl p-0 overflow-hidden"
-      initial={{ opacity: 0, x: 20 }}
+      className={[
+        "rounded-3xl overflow-hidden",
+        "border border-black/10 dark:border-white/10",
+        "bg-white/70 dark:bg-white/5",
+        "backdrop-blur",
+        "shadow-[0_18px_60px_-40px_rgba(0,0,0,0.35)]",
+      ].join(" ")}
+      initial={{ opacity: 0, x: isFa ? -16 : 16 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.45, delay: 0.05 }}
     >
       {/* header */}
-      <div className="px-6 py-4 border-b border-white/10 bg-gradient-to-r from-white/10 to-transparent">
-        <h3 className="text-lg font-semibold">فرم تماس</h3>
-        <p className="text-xs text-gray-300 mt-1">
-          ایمیل‌ات رو دقیق وارد کن تا جواب مستقیم بهش بره.
+      <div className="px-6 py-5 border-b border-black/10 dark:border-white/10 bg-gradient-to-r from-black/[0.03] to-transparent dark:from-white/10">
+        <h3 className="text-base md:text-lg font-semibold text-slate-900 dark:text-white">
+          {ui.formTitle}
+        </h3>
+        <p className="text-xs md:text-sm mt-1 text-slate-600 dark:text-white/70">
+          {ui.formDesc}
         </p>
       </div>
 
@@ -88,8 +156,8 @@ export default function ContactForm() {
           <InputWithIcon
             id="from_name"
             name="from_name"
-            label="نام"
-            placeholder="نام شما"
+            label={ui.name}
+            placeholder={ui.namePh}
             icon={<UserIcon size={16} />}
             value={formik.values.from_name}
             onChange={formik.handleChange}
@@ -102,23 +170,23 @@ export default function ContactForm() {
             id="reply_to"
             name="reply_to"
             type="email"
-            label="ایمیل"
-            placeholder="example@email.com"
+            label={ui.email}
+            placeholder={ui.emailPh}
             icon={<Mail size={16} />}
             value={formik.values.reply_to}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.reply_to && formik.errors.reply_to}
             autoComplete="email"
-            helper="این ایمیل به عنوان Reply-To تنظیم می‌شود."
+            helper={ui.emailHelper}
           />
         </div>
 
         <InputWithIcon
           id="subject"
           name="subject"
-          label="موضوع (اختیاری)"
-          placeholder="درباره چه موضوعی می‌نویسید؟"
+          label={ui.subject}
+          placeholder={ui.subjectPh}
           icon={<SubjectIcon size={16} />}
           value={formik.values.subject}
           onChange={formik.handleChange}
@@ -127,40 +195,60 @@ export default function ContactForm() {
         />
 
         <div className="space-y-1">
-          <label htmlFor="message" className="block text-sm text-gray-200">
-            پیام
+          <label
+            htmlFor="message"
+            className="block text-sm text-slate-700 dark:text-white/80"
+          >
+            {ui.message}
           </label>
+
           <textarea
             id="message"
             name="message"
             rows={6}
-            placeholder="سلام..."
+            placeholder={ui.messagePh}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.message}
-            className="w-full bg-[#161522]/90 border border-white/10 focus:border-purple-500/70 focus:ring-2 focus:ring-purple-500/30 transition rounded-xl px-4 py-3 placeholder-gray-400 resize-y"
+            className={[
+              "w-full rounded-2xl px-4 py-3 resize-y outline-none",
+              "bg-white/80 dark:bg-[#0b1220]/50",
+              "border border-black/10 dark:border-white/10",
+              "text-slate-900 dark:text-white",
+              "placeholder:text-slate-400 dark:placeholder:text-white/35",
+              "focus:ring-2 focus:ring-indigo-500/40 focus:border-transparent",
+            ].join(" ")}
           />
+
           {formik.touched.message && formik.errors.message && (
-            <p className="text-red-400 text-xs">{formik.errors.message}</p>
+            <p className="text-red-500 text-xs">{formik.errors.message}</p>
           )}
         </div>
 
         <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 justify-between">
-          <p className="text-[11px] text-gray-400">
-            با ارسال فرم، فقط اطلاعات لازم برای پاسخ ذخیره می‌شود.
+          <p className="text-[11px] text-slate-500 dark:text-white/60">
+            {ui.privacy}
           </p>
 
           <button
             type="submit"
             disabled={formik.isSubmitting}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-blue-500 hover:opacity-95 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold px-5 py-2.5 rounded-xl transition shadow-lg"
+            className={[
+              "inline-flex items-center gap-2",
+              "px-5 py-2.5 rounded-2xl font-semibold",
+              "text-white",
+              "bg-gradient-to-r from-indigo-600 to-fuchsia-600",
+              "hover:opacity-95 transition",
+              "shadow-[0_16px_40px_-24px_rgba(79,70,229,0.8)]",
+              "disabled:opacity-60 disabled:cursor-not-allowed",
+            ].join(" ")}
           >
             {formik.isSubmitting ? (
-              <span className="inline-block animate-pulse">در حال ارسال…</span>
+              <span className="inline-block animate-pulse">{ui.sending}</span>
             ) : (
               <>
                 <Send size={16} />
-                <span>ارسال پیام</span>
+                <span>{ui.send}</span>
               </>
             )}
           </button>
