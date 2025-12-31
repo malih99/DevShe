@@ -8,7 +8,7 @@ export default function TechPills({
   initialCount = 10,
 }) {
   const { i18n, t } = useTranslation();
-  const isFa = i18n.language === "fa";
+  const isFa = (i18n.language || "en").toLowerCase().startsWith("fa");
   const [showAll, setShowAll] = useState(false);
 
   const visible = useMemo(() => {
@@ -19,15 +19,16 @@ export default function TechPills({
   if (!items?.length) return null;
 
   return (
-    <section dir={isFa ? "rtl" : "ltr"}>
+    <section dir={isFa ? "rtl" : "ltr"} className="mt-10">
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-lg font-semibold opacity-90">
+        <h2 className="text-base font-semibold text-slate-900 dark:text-white/90">
           {t("skills_tools_title")}
         </h2>
 
         {collapsible && items.length > initialCount && (
           <button
-            className="text-sm text-blue-300 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
+            type="button"
+            className="text-sm text-indigo-600 dark:text-blue-300 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/60 rounded"
             onClick={() => setShowAll((s) => !s)}
           >
             {showAll ? t("common_show_less") : t("common_show_more")}
@@ -36,14 +37,20 @@ export default function TechPills({
       </div>
 
       <motion.div
-        className="flex flex-wrap gap-2 overflow-x-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent py-1"
+        className="flex flex-wrap gap-2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
         {visible.map((x) => (
           <span
             key={x}
-            className="text-xs md:text-sm px-2.5 py-1 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 transition select-none"
+            className={[
+              "text-xs md:text-sm px-2.5 py-1 rounded-full",
+              "bg-white/75 dark:bg-white/5",
+              "border border-black/10 dark:border-white/10",
+              "text-slate-800 dark:text-white/80",
+              "hover:bg-white dark:hover:bg-white/10 transition select-none",
+            ].join(" ")}
           >
             {x}
           </span>
