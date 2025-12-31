@@ -34,11 +34,9 @@ function upsertProperty(property, content) {
 function getAbsoluteUrlMaybe(url) {
   if (!url) return "";
   try {
-    // If already absolute => keep
     const u = new URL(url);
     return u.toString();
   } catch {
-    // relative path => make absolute if possible
     if (typeof window === "undefined") return url;
     try {
       return new URL(url, window.location.origin).toString();
@@ -71,11 +69,11 @@ function upsertCanonical(href) {
 export default function Seo({
   title,
   description,
-  canonical, // optional
-  image, // optional: og:image + twitter:image
+  canonical,
+  image,
   noIndex = false,
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -83,6 +81,11 @@ export default function Seo({
     const siteName = t("seo_site_name");
     const finalTitle = title || t("seo_default_title");
     const finalDesc = description || t("seo_default_desc");
+
+    const lang = (i18n.language || "en").toLowerCase().startsWith("fa")
+      ? "fa"
+      : "en";
+    const ogLocale = lang === "fa" ? "fa_IR" : "en_US";
 
     const pageUrl =
       typeof window !== "undefined" ? window.location.href : undefined;
@@ -95,31 +98,32 @@ export default function Seo({
     // Robots
     upsertMeta("robots", noIndex ? "noindex, nofollow" : "index, follow");
 
-    // OpenGraph (basic)
+    // OpenGraph
     upsertProperty("og:site_name", siteName);
     upsertProperty("og:title", finalTitle);
     upsertProperty("og:description", finalDesc);
     upsertProperty("og:type", "website");
+    upsertProperty("og:locale", ogLocale);
     if (pageUrl) upsertProperty("og:url", pageUrl);
 
-    // Twitter (basic)
+    // Twitter
     upsertMeta("twitter:card", "summary");
     upsertMeta("twitter:title", finalTitle);
     upsertMeta("twitter:description", finalDesc);
 
-    // Image (optional)
+    // Image
     const absImg = getAbsoluteUrlMaybe(image);
     if (absImg) {
       upsertProperty("og:image", absImg);
       upsertMeta("twitter:image", absImg);
-      // if you prefer large card when image exists:
       upsertMeta("twitter:card", "summary_large_image");
     }
 
-    // Canonical (optional)
+    // Canonical: default to current URL if not provided (SPA-friendly)
     const absCanonical = getAbsoluteUrlMaybe(canonical);
-    upsertCanonical(absCanonical || "");
-  }, [title, description, canonical, image, noIndex, t]);
+    const finalCanonical = absCanonical || pageUrl || "";
+    upsertCanonical(finalCanonical);
+  }, [title, description, canonical, image, noIndex, t, i18n.language]);
 
   return null;
 }
