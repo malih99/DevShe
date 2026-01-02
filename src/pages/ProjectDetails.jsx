@@ -154,7 +154,6 @@ export default function ProjectDetails() {
     [slug]
   );
 
-  // Lightbox for screenshots
   const [lightbox, setLightbox] = useState(null);
 
   if (!project) {
@@ -249,6 +248,8 @@ export default function ProjectDetails() {
       <motion.section
         dir={isFa ? "rtl" : "ltr"}
         className={cn(
+          // ✅ FIX: prevent horizontal scroll caused by absolute glows
+          "relative overflow-x-hidden",
           "min-h-screen px-6 md:px-10 py-12",
           "bg-slate-50 text-slate-900",
           "dark:bg-gradient-to-br dark:from-[#0c0f18] dark:via-[#1a1232] dark:to-[#241032] dark:text-white",
@@ -261,8 +262,8 @@ export default function ProjectDetails() {
       >
         <div className="max-w-6xl mx-auto">
           {/* glows */}
-          <div className="pointer-events-none absolute -top-24 -left-40 h-80 w-80 rounded-full bg-purple-500/10 blur-3xl dark:bg-purple-500/15" />
-          <div className="pointer-events-none absolute top-12 -right-40 h-80 w-80 rounded-full bg-blue-500/10 blur-3xl dark:bg-blue-500/15" />
+          <div className="pointer-events-none absolute -top-24 -left-40 h-80 w-80 rounded-full bg-purple-500/10 blur-3xl dark:bg-purple-500/15 -z-10" />
+          <div className="pointer-events-none absolute top-12 -right-40 h-80 w-80 rounded-full bg-blue-500/10 blur-3xl dark:bg-blue-500/15 -z-10" />
 
           {/* Top bar */}
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -301,7 +302,6 @@ export default function ProjectDetails() {
 
           {/* Hero + Sidebar */}
           <div className="mt-7 grid grid-cols-1 lg:grid-cols-[1.35fr_0.65fr] gap-6">
-            {/* Main hero */}
             <CardShell className="p-6 md:p-7">
               <div className="flex items-start gap-4">
                 <div
@@ -353,7 +353,6 @@ export default function ProjectDetails() {
               </div>
             </CardShell>
 
-            {/* Sidebar */}
             <div className="lg:sticky lg:top-24 h-fit space-y-6">
               <CardShell className="p-6">
                 <div className="flex items-center justify-between gap-3">
@@ -384,7 +383,7 @@ export default function ProjectDetails() {
                   />
                 </div>
 
-                {role ? (
+                {role && (
                   <>
                     <div className="mt-6 flex items-center gap-2">
                       <Sparkles size={16} className="opacity-80" />
@@ -396,10 +395,9 @@ export default function ProjectDetails() {
                       {role}
                     </p>
                   </>
-                ) : null}
+                )}
               </CardShell>
 
-              {/* Quick glance card */}
               <CardShell className="p-6">
                 <div className="flex items-center gap-2">
                   <Layers3 size={16} className="opacity-80" />
@@ -440,7 +438,6 @@ export default function ProjectDetails() {
             </div>
           </div>
 
-          {/* Case Study */}
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
             <InfoCard
               title={t("project_problem")}
@@ -464,7 +461,6 @@ export default function ProjectDetails() {
             />
           </div>
 
-          {/* Screenshots */}
           {screenshots.length > 0 && (
             <div className="mt-8">
               <div className="flex items-center justify-between gap-3">
@@ -515,7 +511,6 @@ export default function ProjectDetails() {
           )}
         </div>
 
-        {/* Lightbox */}
         {lightbox?.src && (
           <div
             className="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm p-4"
